@@ -1,5 +1,9 @@
+import {Field} from "formik";
+
 const CustomInput = (
     {
+        name,
+        type,
         label,
         placeholder,
         inputClass,
@@ -31,7 +35,10 @@ const CustomInput = (
                 <label className={labelClass}> {label} {required &&
                     <span title={"required field"} className={"text-danger"}>*</span>}</label>
             </div>
-            <input
+            <Field
+                id={name}
+                name={name}
+                type={type}
                 title={label}
                 placeholder={placeholder}
                 className={`${baseClasses} ${colorClasses[color]} ${inputClass}`}
