@@ -5,7 +5,7 @@ interface CustomButtonProps {
     title: string;
     className?: string;
     onClick?: () => void;
-    color: string;
+    color?: string;
 }
 
 const CustomButton: React.FC<CustomButtonProps> = (
@@ -33,8 +33,8 @@ const CustomButton: React.FC<CustomButtonProps> = (
         <button
             type={type}
             title={title}
-            className={`${baseClasses} ${colorClasses[color]} ${className}`}
-            onClick={onClick && onClick}>
+            className={`${baseClasses} ${colorClasses[color!]} ${className}`}
+            onClick={onClick}>
             {title}
         </button>
     )

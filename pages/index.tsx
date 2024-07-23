@@ -1,30 +1,49 @@
-import React from 'react';
-import DynamicForm from "../components/form/DynamicForm"
+import React, {useEffect} from 'react';
+import DynamicForm from "@/components/form/DynamicForm";
 import * as Yup from 'yup';
-
-const fields = [
-    {name: 'username', type: 'text', placeholder: 'Username', label: 'Username', color: "mediumgreen"},
-    {name: 'password', type: 'text', placeholder: 'Password', label: 'Password', color: "mediumgreen"},
-];
-
-const initialValues = {
-    teste: '',
-    teste2: '',
-};
-
-const validationSchema = Yup.object({
-    username: Yup.string().required('Username is required').min(3, 'Username must be at least 3 characters'),
-    password: Yup.string().required('Password is required').min(6, 'Password must be at least 6 characters'),
-});
-
-const onSubmit = (values: { [key: string]: any }, {setSubmitting}: {
-    setSubmitting: (isSubmitting: boolean) => void
-}) => {
-    console.log('Form data', values);
-    setSubmitting(false);
-};
+import {AuthService} from "@/services/AuthService";
+import {useNotification} from "@/components/contexts/NotificationProvider";
+import {useRouter} from "next/router";
+import {removeToken, saveToken} from "@/utils/token";
 
 export default function Home() {
+    const router = useRouter();
+    const {addNotification} = useNotification();
+
+    useEffect(() => {
+        removeToken();
+        addNotification({message: "Removed Token!", type: "info"})
+    }, []);
+
+    const fields = [
+        {name: 'username', type: 'text', placeholder: 'Username', label: 'Username', color: "mediumgreen"},
+        {name: 'password', type: 'password', placeholder: 'Password', label: 'Password', color: "mediumgreen"},
+    ];
+
+    const initialValues = {
+        username: '',
+        password: '',
+    };
+
+    const validationSchema = Yup.object({
+        username: Yup.string().required('Username is required'),
+        password: Yup.string().required('Password is required'),
+    });
+
+    const onSubmit = async (values: { [key: string]: any }, {setSubmitting}: {
+        setSubmitting: (isSubmitting: boolean) => void
+    }) => {
+        try {
+            const response = await AuthService.login(values);
+            saveToken(response.accessToken)
+            addNotification({message: "Login successful!", type: "success"});
+            router.push("/dashboard")
+        } catch (err) {
+            addNotification({message: "Login failed!", type: "error"});
+        }
+        setSubmitting(false);
+    };
+
     return (
         <main className="flex items-center justify-center text-light bg-lightgrey min-h-screen"
               style={{

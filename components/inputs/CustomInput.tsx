@@ -10,8 +10,6 @@ const CustomInput = (
         labelClass,
         required,
         icon,
-        onChange,
-        value,
         color = 'primary'
     }
 ) => {
@@ -42,8 +40,6 @@ const CustomInput = (
                 title={label}
                 placeholder={placeholder}
                 className={`${baseClasses} ${colorClasses[color]} ${inputClass}`}
-                onChange={onChange && onChange}
-                value={value}
             />
         </div>
     )
