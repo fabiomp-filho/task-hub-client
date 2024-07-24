@@ -1,7 +1,10 @@
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { AiFillHome } from "react-icons/ai";
+import {AiFillHome} from "react-icons/ai";
+import {BiExit} from "react-icons/bi";
+import {FaCog} from "react-icons/fa";
+import { BsPeopleFill, BsPersonFillAdd} from "react-icons/bs";
 
 interface MenuItem {
     href: string;
@@ -17,12 +20,12 @@ const menu: MenuItem[] = [
     },
     {
         href: "/about",
-        icon: <AiFillHome size={24} />,
+        icon: <BsPeopleFill size={24} />,
         label: "About",
     },
     {
         href: "/contact",
-        icon: <AiFillHome size={24} />,
+        icon: <BsPersonFillAdd size={24} />,
         label: "Contact",
     },
 ];
@@ -30,38 +33,46 @@ const menu: MenuItem[] = [
 const Sidebar = ({ isOpen }: { isOpen: boolean }) => {
     const router = useRouter();
 
-    console.log(router.pathname === menu[0].href)
     return (
         <aside
-            className={`bg-darkgreen shadow-lightgrey shadow text-white rounded-r-3xl text-center transition-all duration-300 fixed md:relative z-40 h-full md:h-auto overflow-hidden ${
+            className={`bg-darkgreen shadow-lightgrey shadow text-white rounded-r-3xl text-center transition-all duration-300 fixed md:relative md:h-auto h-96 z-1000 overflow-hidden ${
                 isOpen ? 'max-w-20' : 'max-w-0 md:max-w-40'
             }`}
         >
-            <nav>
+            <nav className="flex flex-col">
                 <ul className="p-3">
                     {menu.map((item, index) => (
                         <li
                             key={index}
-                            className={`transition-all cursor-pointer hover:shadow hover:shadow-white duration-500 p-2 block mt-5 rounded-2xl  hover:bg-lightgreyHover ${
+                            className={`transition-all cursor-pointer hover:shadow hover:shadow-white duration-500 p-2 block mt-5 rounded-2xl hover:bg-lightgreyHover ${
                                 router.pathname === item.href
                                     ? 'bg-lightgrey text-mediumgreen shadow-white shadow'
                                     : 'bg-white text-mediumgreen shadow-lg shadow-black'
                             }`}
                             title={item.label}
                         >
-                            <Link  href={item.href}>
+                            <Link className="flex items-center justify-center space-x-2" href={item.href}>
                                 {item.icon}
                             </Link>
                         </li>
                     ))}
                 </ul>
+                <ul className="p-3 absolute bottom-0">
+
+                    <li className={`mt-2 transition-all cursor-pointer hover:shadow hover:shadow-white duration-500 p-2 
+                    block rounded-2xl hover:bg-lightgreyHover bg-white text-mediumgreen shadow-lg shadow-black `}>
+                        <Link href={"/"} title={"Configurations"}>
+                            <FaCog size={24} />
+                        </Link>
+                    </li>
+                    <li className={`mt-2 transition-all cursor-pointer hover:shadow hover:shadow-white duration-500 p-2 
+                    block rounded-2xl hover:bg-lightgreyHover bg-white text-mediumgreen shadow-lg shadow-black `}>
+                        <Link href={"/"} title={"Logout"}>
+                            <BiExit size={24} />
+                        </Link>
+                    </li>
+                </ul>
             </nav>
-            {isOpen && (
-                <div
-                    className="absolute top-1/2 right-0 transform translate-x-full -translate-y-1/2 bg-darkgreen p-2 rounded-full">
-                    <span className="text-white">&rarr;</span> {/* Arrow pointing right */}
-                </div>
-            )}
         </aside>
     );
 };
