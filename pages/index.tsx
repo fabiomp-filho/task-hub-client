@@ -6,7 +6,7 @@ import {useNotification} from "@/components/contexts/NotificationProvider";
 import {useRouter} from "next/router";
 import {removeToken, saveToken} from "@/utils/token";
 
-export default function Home() {
+export default function Login() {
     const router = useRouter();
     const {addNotification} = useNotification();
 
@@ -37,7 +37,7 @@ export default function Home() {
             const response = await AuthService.login(values);
             saveToken(response.accessToken)
             addNotification({message: "Login successful!", type: "success"});
-            router.push("/dashboard")
+            router.push("/home")
         } catch (err) {
             addNotification({message: "Login failed!", type: "error"});
         }
