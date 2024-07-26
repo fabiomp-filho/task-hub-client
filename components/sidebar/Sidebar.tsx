@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import {AiFillHome} from "react-icons/ai";
 import {BiExit} from "react-icons/bi";
 import {FaCog} from "react-icons/fa";
-import { BsPeopleFill, BsPersonFillAdd} from "react-icons/bs";
+import {BsPeopleFill, BsPersonFillGear} from "react-icons/bs";
 
 interface MenuItem {
     href: string;
@@ -24,9 +24,9 @@ const menu: MenuItem[] = [
         label: "About",
     },
     {
-        href: "/contact",
-        icon: <BsPersonFillAdd size={24} />,
-        label: "Contact",
+        href: "/users",
+        icon: <BsPersonFillGear size={24} />,
+        label: "Manage Users",
     },
 ];
 

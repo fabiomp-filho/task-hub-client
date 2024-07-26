@@ -12,22 +12,21 @@ export default function Login() {
 
     useEffect(() => {
         removeToken();
-        addNotification({message: "Removed Token!", type: "info"})
     }, []);
 
     const fields = [
-        {name: 'username', type: 'text', placeholder: 'Username', label: 'Username', color: "mediumgreen"},
+        {name: 'email', type: 'text', placeholder: 'E-mail', label: 'E-mail', color: "mediumgreen"},
         {name: 'password', type: 'password', placeholder: 'Password', label: 'Password', color: "mediumgreen"},
     ];
 
     const initialValues = {
-        username: '',
+        email: '',
         password: '',
     };
 
     const validationSchema = Yup.object({
-        username: Yup.string().required('Username is required'),
-        password: Yup.string().required('Password is required'),
+        email: Yup.string(),
+        password: Yup.string(),
     });
 
     const onSubmit = async (values: { [key: string]: any }, {setSubmitting}: {

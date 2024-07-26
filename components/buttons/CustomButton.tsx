@@ -17,7 +17,7 @@ const CustomButton: React.FC<CustomButtonProps> = (
         color = "primary"
     }
 ) => {
-    const baseClasses = `font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline duration-300`;
+    const baseClasses = `font-bold px-4 rounded-lg focus:outline-none focus:shadow-outline duration-300`;
     const colorClasses = {
         primary: `bg-primary hover:bg-primaryHover text-white`,
         secondary: `bg-secondary hover:bg-secondaryHover text-white`,

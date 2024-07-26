@@ -4,11 +4,11 @@ import {FaBell} from "react-icons/fa";
 
 const Header = ({isOpen, toggleSidebar}) => {
     return (
-        <header className="bg-darkgreen shadow-lightgrey shadow text-white p-4 flex justify-between items-center">
+        <header className="bg-darkgreen shadow-lightgrey md:p-1 p-2 shadow text-white  flex justify-between items-center">
             <div
-                className={"flex items-center bg-white shadow-lightgrey shadow-lg rounded-2xl border-0 p-1 text-mediumgreen"}>
-                <img src="/distribuidor-92.png" alt="Logo" className="align-middle h-8 md:h-12"/>
-                <h1 className="md:text-5xl text-3xl">Task Hub</h1>
+                className={"flex items-center md:ml-12 gap-4"}>
+                <img src="/distribuidor-white-92.png" alt="Logo" className="align-middle h-8 md:h-12"/>
+                <h1 className=" text-4xl font-medium">Task Hub</h1>
             </div>
             <div className={"flex items-center gap-4 md:mr-20"}>
                 <button title={"Notifications"}
