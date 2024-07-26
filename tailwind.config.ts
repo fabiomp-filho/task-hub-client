@@ -23,6 +23,7 @@ const config: Config = {
                 current: 'currentColor',
                 black: Colors.black,
                 white: Colors.white,
+                iceWhite: Colors.iceWhite,
                 primary: Colors.primary,
                 secondary: Colors.secondary,
                 success: Colors.success,
