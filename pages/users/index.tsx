@@ -1,7 +1,10 @@
 import DynamicTable from "@/components/table/DynamicTable";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import Modal from "@/components/modal/Modal";
 
 const Users = () => {
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const [pagination, setPagination] = useState({
         size: 10,
@@ -10,6 +13,9 @@ const Users = () => {
         totalElements: 50,
     });
 
+    useEffect(() => {
+        console.log(pagination)
+    }, []);
     const data = [
         { id: 1, name: 'Entity 1', value: 'Value 1' },
         { id: 2, name: 'Entity 2', value: 'Value 2' },
@@ -31,7 +37,11 @@ const Users = () => {
     ];
 
     const handleAddNewEntity = () => {
-        console.log('Add new entity');
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
     };
 
     const handlePageChange = (newPage: number) => {
@@ -43,14 +53,17 @@ const Users = () => {
 
     return (
         <>
-
             <DynamicTable
+                title={"Manage Users"}
                 pagination={pagination}
                 data={data}
                 columns={columns}
                 onAddNewEntity={handleAddNewEntity}
                 onPageChange={handlePageChange}
             />
+            <Modal isOpen={isModalOpen} onClose={handleCloseModal} title="Add">
+                <p>This is the content of the modal.</p>
+            </Modal>
         </>
     );
 }

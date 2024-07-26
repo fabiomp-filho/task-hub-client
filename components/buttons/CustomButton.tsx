@@ -31,7 +31,7 @@ const CustomButton: React.FC<CustomButtonProps> = (
         disabled = false
     }
 ) => {
-    const baseClasses = `flex gap-4 justify-center items-center font-bold py-${py} px-${px} ${rounded} focus:outline-none focus:shadow-outline duration-300`;
+    const baseClasses = `flex md:gap-4 gap-2 justify-center items-center font-bold py-${py} px-${px} ${rounded} focus:outline-none focus:shadow-outline duration-300`;
     const colorClasses = {
         primary: `bg-primary hover:bg-primaryHover text-white`,
         outlinePrimary: `bg-white border border-primary hover:border-primaryHover text-primary`,

@@ -29,6 +29,7 @@ interface DynamicTableProps {
 
 const DynamicTable: React.FC<DynamicTableProps> = (
     {
+        title,
         pagination,
         data,
         columns,
@@ -38,17 +39,12 @@ const DynamicTable: React.FC<DynamicTableProps> = (
         onEdit,
         onDelete
     }) => {
-    const handlePageChange = (newPage: number) => {
-        if (newPage >= 0 && newPage <= pagination.totalPages) {
-            onPageChange(newPage);
-        }
-    };
 
     return (
-        <div className="flex flex-col shadow-lightgreyHover shadow flex-1 p-8 bg-white md:m-12 rounded-3xl overflow-auto">
-            <div className="min-w-full flex justify-between mb-4">
-                <h3 className="md:text-4xl text-xl font-medium">Manage Users</h3>
-                <CustomButton icon={<FaPlus size={18}/> } onClick={onAddNewEntity} color="success" type="button" title="Add New"/>
+        <div className="flex flex-col shadow-lightgreyHover shadow flex-1 md:p-8 p-4 bg-white md:m-4 rounded-3xl overflow-auto">
+            <div className="min-w-full md:gap-0 gap-4 md:flex md:flex-row flex flex-col md:justify-between mb-4">
+                <h3 className="md:text-4xl text-3xl font-medium text-center">{title ?? "Title here"}</h3>
+                <CustomButton py={"2"} icon={<FaPlus size={18}/> } onClick={onAddNewEntity} color="success" type="button" title="Add New"/>
             </div>
             <div className="overflow-auto my-12">
                 <table className="min-w-full table-fixed border-collapse ">
@@ -105,7 +101,7 @@ const DynamicTable: React.FC<DynamicTableProps> = (
                     </tbody>
                 </table>
             </div>
-            <Pagination pagination={pagination} onPageChange={handlePageChange}/>
+            <Pagination pagination={pagination} onPageChange={onPageChange}/>
         </div>
     );
 };

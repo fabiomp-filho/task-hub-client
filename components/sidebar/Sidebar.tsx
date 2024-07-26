@@ -19,9 +19,9 @@ const menu: MenuItem[] = [
         label: "Home",
     },
     {
-        href: "/about",
+        href: "/teams",
         icon: <BsPeopleFill size={24} />,
-        label: "About",
+        label: "Teams",
     },
     {
         href: "/users",
