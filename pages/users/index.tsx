@@ -10,7 +10,6 @@ const Users = () => {
         totalElements: 50,
     });
 
-    console.log(pagination)
     const data = [
         { id: 1, name: 'Entity 1', value: 'Value 1' },
         { id: 2, name: 'Entity 2', value: 'Value 2' },
@@ -19,6 +18,9 @@ const Users = () => {
         { id: 5, name: 'Entity 1', value: 'Value 1' },
         { id: 6, name: 'Entity 2', value: 'Value 2' },
         { id: 7, name: 'Entity 1', value: 'Value 1' },
+        { id: 8, name: 'Entity 1', value: 'Value 1' },
+        { id: 9, name: 'Entity 2', value: 'Value 2' },
+        { id: 10, name: 'Entity 1', value: 'Value 1' },
 
     ];
 

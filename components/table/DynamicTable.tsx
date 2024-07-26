@@ -39,7 +39,7 @@ const DynamicTable: React.FC<DynamicTableProps> = (
         onDelete
     }) => {
     const handlePageChange = (newPage: number) => {
-        if (newPage >= 1 && newPage <= pagination.totalPages) {
+        if (newPage >= 0 && newPage <= pagination.totalPages) {
             onPageChange(newPage);
         }
     };
