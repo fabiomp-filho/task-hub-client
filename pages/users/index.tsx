@@ -5,15 +5,21 @@ const Users = () => {
 
     const [pagination, setPagination] = useState({
         size: 10,
-        currentPage: 1,
-        totalPages: 5,
+        currentPage: 0,
+        totalPages: 10,
         totalElements: 50,
     });
 
+    console.log(pagination)
     const data = [
         { id: 1, name: 'Entity 1', value: 'Value 1' },
         { id: 2, name: 'Entity 2', value: 'Value 2' },
-        // Adicione mais dados conforme necessário
+        { id: 3, name: 'Entity 1', value: 'Value 1' },
+        { id: 4, name: 'Entity 2', value: 'Value 2' },
+        { id: 5, name: 'Entity 1', value: 'Value 1' },
+        { id: 6, name: 'Entity 2', value: 'Value 2' },
+        { id: 7, name: 'Entity 1', value: 'Value 1' },
+
     ];
 
     const columns = [
