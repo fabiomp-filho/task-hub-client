@@ -1,41 +1,69 @@
-import CustomInput from "@/components/inputs/CustomInput";
-import {FaLock, FaUser} from "react-icons/fa";
-import CustomButton from "@/components/buttons/CustomButton";
-import Image from "next/image";
+import React, {useEffect} from 'react';
+import DynamicForm from "@/components/form/DynamicForm";
+import * as Yup from 'yup';
+import {AuthService} from "@/services/AuthService";
+import {useNotification} from "@/components/contexts/NotificationProvider";
+import {useRouter} from "next/router";
+import {removeToken, saveToken} from "@/utils/token";
 
-export default function Home() {
+export default function Login() {
+    const router = useRouter();
+    const {addNotification} = useNotification();
+
+    useEffect(() => {
+        removeToken();
+        addNotification({message: "Removed Token!", type: "info"})
+    }, []);
+
+    const fields = [
+        {name: 'username', type: 'text', placeholder: 'Username', label: 'Username', color: "mediumgreen"},
+        {name: 'password', type: 'password', placeholder: 'Password', label: 'Password', color: "mediumgreen"},
+    ];
+
+    const initialValues = {
+        username: '',
+        password: '',
+    };
+
+    const validationSchema = Yup.object({
+        username: Yup.string().required('Username is required'),
+        password: Yup.string().required('Password is required'),
+    });
+
+    const onSubmit = async (values: { [key: string]: any }, {setSubmitting}: {
+        setSubmitting: (isSubmitting: boolean) => void
+    }) => {
+        try {
+            const response = await AuthService.login(values);
+            saveToken(response.accessToken)
+            addNotification({message: "Login successful!", type: "success"});
+            router.push("/home")
+        } catch (err) {
+            addNotification({message: "Login failed!", type: "error"});
+        }
+        setSubmitting(false);
+    };
+
     return (
-        <main className={"flex items-center justify-center text-light bg-lightgrey "}
-              style={{backgroundImage: "url('/circuit-board.svg')"}}>
-            <div className={"p-8 bg-white shadow-darkgreen shadow-md rounded-lg w-full max-w-xl bg-opacity-90"}>
-                <form className={"grid p-6 gap-6 items-center"}>
-                    <div className={"grid text-center mb-4 gap-2"}>
-                        <Image src="/distribuidor-92.png" alt="Logo" width={92} height={92} className="mx-auto mb-4 w-24 h-24" />
-                        <h1 className={"text-4xl text-center text-darkgreen "}><span></span>Task Hub</h1>
-                        <p className="text-lightgrey text-center">Welcome!</p>
-                    </div>
-                    <CustomInput
-                        icon={<FaUser className={"text-darkgreen"}/>}
-                        required={true}
-                        placeholder={"Username"}
-                        label={"Username"}
-                        color={"mediumgreen"}
-                        inputClass={"border-darkgreen"}
-                    />
-                    <CustomInput
-                        icon={<FaLock className={"text-darkgreen"}/>}
-                        required={true}
-                        placeholder={"Password"}
-                        label={"Password"}
-                        color={"mediumgreen"}
-                        inputClass={"border-darkgreen"}
-                    />
-                    <CustomButton className={"mt-2"} title={"Log In"} color={"mediumgreen"}/>
-                    <div className="flex justify-center mt-4">
-                        <a title={"Clique para recuperar a senha"} href="#"
-                           className="text-sm text-center text-mediumgreen hover:underline">Forget password?</a>
-                    </div>
-                </form>
+        <main className="flex items-center justify-center text-light bg-lightgrey min-h-screen"
+              style={{
+                  backgroundImage: "url('/circuit-board.svg')",
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center'
+              }}>
+            <div className="p-8 bg-white shadow-darkgreen shadow-md rounded-lg w-full max-w-xl bg-opacity-90">
+                <div className="grid text-center mb-4 gap-2">
+                    <img src="/distribuidor-92.png" alt="Logo" className="mx-auto mb-4 w-24 h-24"/>
+                    <h1 className="text-4xl text-center text-darkgreen">Task Hub</h1>
+                    <p className="text-lightgrey text-center">Welcome!</p>
+                </div>
+                <DynamicForm
+                    fields={fields}
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={onSubmit}
+                    submitColor={"mediumgreen"}
+                />
             </div>
         </main>
     );
