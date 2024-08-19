@@ -27,14 +27,14 @@ const CustomInput = (
     };
 
     return (
-        <div className={"grid gap-2"}>
+        <div key={name} className={"grid gap-2"}>
             <div className={"flex items-center gap-2"}>
                 {icon && <span>{icon}</span>}
-                <label className={labelClass}> {label} {required &&
+                <label htmlFor={name} className={labelClass}> {label} {required &&
                     <span title={"required field"} className={"text-danger"}>*</span>}</label>
             </div>
             <Field
-                id={name}
+                key={name}
                 name={name}
                 type={type}
                 title={label}

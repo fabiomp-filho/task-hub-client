@@ -12,26 +12,28 @@ interface CustomButtonProps {
     icon?: React.ReactNode;
     currentPage?: boolean;
     disabled?: boolean;
+    width?: string;
 }
 
 const CustomButton: React.FC<CustomButtonProps> = (
     {
         key,
-        type ,
+        type,
         title,
         hoverTitle,
         py = "2",
-        px= "4",
+        px = "4",
         rounded = "rounded-lg",
         className = "",
         onClick,
         color = "primary",
         icon,
         currentPage = false,
-        disabled = false
+        disabled = false,
+        width,
     }
 ) => {
-    const baseClasses = `flex md:gap-4 gap-2 justify-center items-center font-bold py-${py} px-${px} ${rounded} focus:outline-none focus:shadow-outline duration-300`;
+    const baseClasses = `${width} flex md:gap-4 gap-2 justify-center items-center font-bold py-${py} px-${px} ${rounded} focus:outline-none focus:shadow-outline duration-300`;
     const colorClasses = {
         primary: `bg-primary hover:bg-primaryHover text-white`,
         outlinePrimary: `bg-white border border-primary hover:border-primaryHover text-primary`,

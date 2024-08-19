@@ -12,6 +12,7 @@ export default function App({Component, pageProps}: AppProps) {
     const isLoginPage = router.pathname === "/";
 
     return (
+
         <NotificationProvider>
             <Head>
                 <title>Task Hub</title>

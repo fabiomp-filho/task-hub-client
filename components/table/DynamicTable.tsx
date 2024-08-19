@@ -1,7 +1,7 @@
 import React from 'react';
 import CustomButton from "@/components/buttons/CustomButton";
 import Pagination from "@/components/table/Pagination";
-import {FaPen, FaEye, FaTrash, FaPlus} from "react-icons/fa";
+import {FaEye, FaPen, FaPlus, FaTrash} from "react-icons/fa";
 
 interface Pagination {
     size: number;
@@ -22,9 +22,10 @@ interface DynamicTableProps {
     columns: Column[];
     onAddNewEntity: () => void;
     onPageChange: (newPage: number) => void;
-    onView: (id: any) => void;
-    onEdit: (id: any) => void;
-    onDelete: (id: any) => void;
+    onView: () => void;
+    onEdit: string;
+    onDelete: () => void;
+    setEntity: (entity: Object) => void
 }
 
 const DynamicTable: React.FC<DynamicTableProps> = (
@@ -37,28 +38,35 @@ const DynamicTable: React.FC<DynamicTableProps> = (
         onPageChange,
         onView,
         onEdit,
-        onDelete
+        onDelete,
+        setEntity,
+        router
     }) => {
 
     return (
-        <div className="flex flex-col shadow-lightgreyHover shadow flex-1 md:p-8 p-4 bg-white md:m-4 rounded-3xl overflow-auto">
+        <div
+            className="flex flex-col shadow-lightgreyHover shadow flex-1 md:p-8 p-4 bg-white md:m-4
+             rounded-3xl overflow-auto">
             <div className="min-w-full md:gap-0 gap-4 md:flex md:flex-row flex flex-col md:justify-between mb-4">
                 <h3 className="md:text-4xl text-3xl font-medium text-center">{title ?? "Title here"}</h3>
-                <CustomButton py={"2"} icon={<FaPlus size={18}/> } onClick={onAddNewEntity} color="success" type="button" title="Add New"/>
+                <CustomButton py={"2"} icon={<FaPlus size={18}/>} onClick={onAddNewEntity} color="success" type="button"
+                              title="Create New"/>
             </div>
             <div className="overflow-auto my-12">
                 <table className="min-w-full table-fixed border-collapse ">
                     <thead className="bg-mediumgreen">
                     <tr>
                         {columns.map((column) => (
-                            <th key={column.key} className="hover:bg-mediumgreenHover transition-all duration-300 px-4 py-3 text-left font-medium text-white uppercase border
+                            <th key={column.key} className="hover:bg-mediumgreenHover transition-all
+                             duration-300 px-4 py-3 text-left font-medium text-white uppercase border
                            ">
                                 {column.label}
                             </th>
 
                         ))}
                         <th key={"actions"}
-                            className="transition-all duration-300 w-1/4 text-center px-4 py-3 hover:bg-mediumgreenHover font-medium text-white uppercase border
+                            className="transition-all duration-300 w-1/4 text-center px-4 py-3
+                            hover:bg-mediumgreenHover font-medium text-white uppercase border
                            ">
                             Actions
                         </th>
@@ -76,21 +84,29 @@ const DynamicTable: React.FC<DynamicTableProps> = (
                                 <CustomButton
                                     color={"primary"}
                                     px={"3"}
-                                    onClick={() => onView(row.id)}
+                                    onClick={() => {
+                                        setEntity(row);
+                                        onView();
+                                    }}
                                     hoverTitle={"Click to view info"}
                                     icon={<FaEye className={"text-white"} size={18}/>}
                                 />
                                 <CustomButton
                                     color={"secondary"}
                                     px={"3"}
-                                    onClick={() => onEdit(row.id)}
+                                    onClick={() => {
+                                        router.push(`/${onEdit}/${row.id}`)
+                                    }}
                                     hoverTitle="Click to edit info"
                                     icon={<FaPen className={"text-white"} size={18}/>}
                                 />
                                 <CustomButton
                                     color={"danger"}
                                     px={"3"}
-                                    onClick={() => onDelete(row.id)}
+                                    onClick={() => {
+                                        setEntity(row);
+                                        onDelete();
+                                    }}
                                     hoverTitle="Click to exclude"
                                     icon={<FaTrash className={"text-white"} size={18}/>}
                                 />

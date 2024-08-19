@@ -1,5 +1,6 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import CustomNotification from '@/components/notification/Notification';
+import {initNotificationService} from "@/components/notification/NotificationService";
 
 interface Notification {
     message: string;
@@ -24,8 +25,12 @@ export const NotificationProvider = ({ children }: { children: ReactNode }) => {
     const [notifications, setNotifications] = useState<Notification[]>([]);
 
     const addNotification = (notification: Notification) => {
-        setNotifications([...notifications, notification]);
+        setNotifications((prevNotifications) => [...prevNotifications, notification]);
     };
+
+    useEffect(() => {
+        initNotificationService(addNotification);
+    }, []);
 
     return (
         <NotificationContext.Provider value={{ addNotification }}>
@@ -37,7 +42,9 @@ export const NotificationProvider = ({ children }: { children: ReactNode }) => {
                         message={notification.message}
                         type={notification.type}
                         onClose={() => {
-                            setNotifications(notifications.filter((_, i) => i !== index));
+                            setNotifications((prevNotifications) =>
+                                prevNotifications.filter((_, i) => i !== index)
+                            );
                         }}
                     />
                 ))}

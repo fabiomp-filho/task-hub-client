@@ -19,14 +19,9 @@ export default function Login() {
         {name: 'password', type: 'password', placeholder: 'Password', label: 'Password', color: "mediumgreen"},
     ];
 
-    const initialValues = {
-        email: '',
-        password: '',
-    };
-
     const validationSchema = Yup.object({
-        email: Yup.string(),
-        password: Yup.string(),
+        email: Yup.string().required("E-mail is a required field"),
+        password: Yup.string().required("Password is a required field"),
     });
 
     const onSubmit = async (values: { [key: string]: any }, {setSubmitting}: {
@@ -58,7 +53,6 @@ export default function Login() {
                 </div>
                 <DynamicForm
                     fields={fields}
-                    initialValues={initialValues}
                     validationSchema={validationSchema}
                     onSubmit={onSubmit}
                     submitColor={"mediumgreen"}
