@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import CustomButton from "@/components/buttons/CustomButton";
 import {RenderFields} from "@/components/form/RenderFields";
 
-export interface IFields {
+interface FieldProps {
     name: string;
     type: string;
     placeholder: string;
@@ -13,26 +13,22 @@ export interface IFields {
 }
 
 interface DynamicFormProps {
-    fields: IFields[];
+    fields: FieldProps[];
     initialValues?: { [key: string]: any };
     validationSchema: Yup.ObjectSchema<any>;
     onSubmit: (values: { [key: string]: any }, formikHelpers: FormikHelpers<{ [key: string]: any }>) => void;
-    submitColor?: string;
-    titleSubmit?: string;
-    width?: string;
+    submitColor: string;
 }
 
-const DynamicForm: React.FC<DynamicFormProps> = (
+const DynamicFormModal: React.FC<DynamicFormProps> = (
     {
         fields = [],
         initialValues = {},
         validationSchema,
         onSubmit,
         submitColor,
-        titleSubmit = "Submit",
-        width
-    }
-) => {
+        onClose,
+    }) => {
 
     const computedInitialValues = useMemo(() => {
         return fields.reduce((acc, field) => {
@@ -40,28 +36,36 @@ const DynamicForm: React.FC<DynamicFormProps> = (
             return acc;
         }, {} as { [key: string]: any });
     }, [fields, initialValues]);
-
     return (
         <Formik
             initialValues={computedInitialValues}
             validationSchema={validationSchema}
             onSubmit={onSubmit}
         >
-
             {formik => (
-                <Form className="grid gap-4">
+                <Form className="mt-4 grid gap-4">
                     {fields.map((field, index) => (
+
                         <RenderFields field={field} index={index} formik={formik}/>
+
                     ))}
-
-                    <div className="col-span-full flex justify-center mt-4">
-                        <CustomButton width={width} color={submitColor} type="submit" title={titleSubmit} />
+                    <div className="flex justify-end mt-4 gap-4">
+                        <CustomButton
+                            onClick={onClose}
+                            type={"reset"}
+                            color={"secondary"}
+                            title={"Close"}
+                        />
+                        <CustomButton
+                            color={submitColor}
+                            type={"submit"}
+                            title={"Submit"}
+                        />
                     </div>
-
                 </Form>
             )}
         </Formik>
     );
 };
 
-export default DynamicForm;
+export default DynamicFormModal;
