@@ -5,6 +5,8 @@ import {AuthService} from "@/services/AuthService";
 import {useNotification} from "@/components/contexts/NotificationProvider";
 import {useRouter} from "next/router";
 import {removeToken, saveToken} from "@/utils/token";
+import Image from "next/image";
+import logo from "public/distribuidor-92.png"
 
 export default function Login() {
     const router = useRouter();
@@ -33,7 +35,7 @@ export default function Login() {
             addNotification({message: "Login successful!", type: "success"});
             router.push("/home")
         } catch (err) {
-            addNotification({message: "Login failed!", type: "error"});
+
         }
         setSubmitting(false);
     };
@@ -47,7 +49,7 @@ export default function Login() {
               }}>
             <div className="p-8 bg-white shadow-darkgreen shadow-md rounded-lg w-full max-w-xl bg-opacity-90">
                 <div className="grid text-center mb-4 gap-2">
-                    <img src="/distribuidor-92.png" alt="Logo" className="mx-auto mb-4 w-24 h-24"/>
+                    <Image src={logo} alt="Logo" className="mx-auto mb-4 w-24 h-24"/>
                     <h1 className="text-4xl text-center text-darkgreen">Task Hub</h1>
                     <p className="text-lightgrey text-center">Welcome!</p>
                 </div>

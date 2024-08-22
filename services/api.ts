@@ -27,7 +27,6 @@ api.interceptors.response.use(
         if (error.response) {
             const { status, data } = error.response;
 
-            // Trata erros 401 (não autorizado)
             if (status === 401) {
                 notify({
                     message: "Your session has expired. Please log in again.",
