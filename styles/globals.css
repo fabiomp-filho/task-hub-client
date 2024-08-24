@@ -15,11 +15,24 @@ body {
 main {
     height: 100vh;
 }
+.scrollbar-sidebar {
+
+    &::-webkit-scrollbar-thumb {
+        @apply border-0 border-mediumgreenHover bg-mediumgreen;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        @apply bg-darkgreenHover;
+    }
+
+    &::-webkit-scrollbar-track {
+        @apply bg-mediumgreenHover;
+    }
+}
 
 ::-webkit-scrollbar {
     width: 12px;
     height: 12px;
-
 }
 
 ::-webkit-scrollbar-thumb {

@@ -1,9 +1,12 @@
 import React from 'react';
-import {BiArrowBack} from "react-icons/bi";
+import {NextRouter} from "next/router";
+import {FaChevronLeft} from "react-icons/fa";
 
 interface IMainBox {
     title: string;
     back?: boolean;
+    route?: NextRouter;
+    body?: React.ReactNode
 }
 
 const MainBox: React.FC<IMainBox> = (
@@ -20,9 +23,9 @@ const MainBox: React.FC<IMainBox> = (
                 <div className={"flex items-center gap-4"}>
                     {back && <button
                         title={"Back"}
-                        className={"flex justify-center items-center bg-lightgrey rounded-3xl w-8 h-8 text-center font-bold"}
+                        className={"flex justify-center items-center bg-lightgrey p-2 rounded-3xl text-center font-bold"}
                         onClick={() => router.back()}>
-                        <BiArrowBack className={"font-bold"} color={"white"}/>
+                        <FaChevronLeft className={"font-bold"} color={"white"} size={14}/>
                     </button>}
                     <h3 className="md:text-4xl text-3xl font-medium text-center">{title ?? "Title here"}</h3>
                 </div>

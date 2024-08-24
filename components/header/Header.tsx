@@ -1,24 +1,35 @@
 import React from "react";
-import {FiMenu, FiX} from "react-icons/fi";
-import {FaBell} from "react-icons/fa";
+import {FaBell, FaCog} from "react-icons/fa";
+import Link from "next/link";
+import {RiLogoutCircleRLine} from "react-icons/ri";
 
-const Header = ({isOpen, toggleSidebar}) => {
+const Header = () => {
     return (
-        <header className="bg-darkgreen shadow-lightgrey md:p-1 p-2 shadow text-white  flex justify-between items-center">
+        <header className="bg-mediumgreen p-1.5 text-white flex justify-between items-center border-b border-mediumgreenHover">
             <div
-                className={"flex items-center md:ml-12 gap-4"}>
-                <img src="/distribuidor-white-92.png" alt="Logo" className="align-middle h-8 md:h-12"/>
-                <h1 className=" text-4xl font-medium">Task Hub</h1>
+                className={"flex items-center md:ml-8 gap-4"}>
+                <img src="/distribuidor-white-92.png" alt="Logo" className="align-middle h-8"/>
+                <h1 className=" text-2xl font-medium">Task Hub</h1>
             </div>
             <div className={"flex items-center gap-4 md:mr-20"}>
                 <button title={"Notifications"}
-                        className="hover:bg-lightgrey shadow-lightgrey shadow-lg hover:shadow hover:shadow-white transition-all transition-500 p-2 bg-white text-mediumgreen rounded-2xl">
-                    <FaBell size={24}/>
+                        className="hover:bg-mediumgreenHover hover:shadow hover:shadow-black
+                        transition-all duration-500 p-2 bg-mediumgreen text-white rounded-2xl">
+                    <FaBell size={16}/>
                 </button>
-                <button title={"toggle menu"} onClick={toggleSidebar}
-                        className="md:hidden hover:bg-lightgrey shadow-lightgrey shadow-lg hover:shadow hover:shadow-white transition-all transition-500 p-2 bg-white text-mediumgreen rounded-2xl">
-                    {isOpen ? <FiX size={24}/> : <FiMenu size={24}/>}
-                </button>
+
+                <li className={`transition-all cursor-pointer hover:shadow hover:shadow-black duration-500 p-2 
+                    block rounded-2xl hover:bg-mediumgreenHover bg-mediumgreen text-white `} title={"Configurations"}>
+                    <Link href={"/"} >
+                        <FaCog size={16} />
+                    </Link>
+                </li>
+                <li className={`transition-all cursor-pointer hover:shadow hover:shadow-black duration-500 p-2 
+                    block rounded-2xl hover:bg-mediumgreenHover bg-mediumgreen text-white`} title={"Logout"}>
+                    <Link href={"/"} >
+                        <RiLogoutCircleRLine  size={18} />
+                    </Link>
+                </li>
             </div>
         </header>
     )

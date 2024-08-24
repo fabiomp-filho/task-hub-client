@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import {AuthService} from "@/services/AuthService";
 import {useNotification} from "@/components/contexts/NotificationProvider";
 import {useRouter} from "next/router";
-import {removeToken, saveToken} from "@/utils/token";
+import {removeLogin, saveToken} from "@/utils/token";
 import Image from "next/image";
 import logo from "public/distribuidor-92.png"
 
@@ -13,7 +13,7 @@ export default function Login() {
     const {addNotification} = useNotification();
 
     useEffect(() => {
-        removeToken();
+        removeLogin();
     }, []);
 
     const fields = [
@@ -51,7 +51,7 @@ export default function Login() {
                 <div className="grid text-center mb-4 gap-2">
                     <Image src={logo} alt="Logo" className="mx-auto mb-4 w-24 h-24"/>
                     <h1 className="text-4xl text-center text-darkgreen">Task Hub</h1>
-                    <p className="text-lightgrey text-center">Welcome!</p>
+
                 </div>
                 <DynamicForm
                     fields={fields}

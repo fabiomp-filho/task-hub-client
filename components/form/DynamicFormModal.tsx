@@ -12,7 +12,7 @@ interface FieldProps {
     color: string;
 }
 
-interface DynamicFormProps {
+export interface DynamicFormProps {
     fields: FieldProps[];
     initialValues?: { [key: string]: any };
     validationSchema: Yup.ObjectSchema<any>;
@@ -28,6 +28,7 @@ const DynamicFormModal: React.FC<DynamicFormProps> = (
         onSubmit,
         submitColor,
         onClose,
+        titleSubmit
     }) => {
 
     const computedInitialValues = useMemo(() => {
@@ -36,11 +37,18 @@ const DynamicFormModal: React.FC<DynamicFormProps> = (
             return acc;
         }, {} as { [key: string]: any });
     }, [fields, initialValues]);
+
+    const handleSubmit = (values: { [key: string]: any }, formikHelpers: FormikHelpers<{ [key: string]: any }>) => {
+        onSubmit(values, formikHelpers);
+        formikHelpers.resetForm();
+    };
+
     return (
         <Formik
             initialValues={computedInitialValues}
             validationSchema={validationSchema}
-            onSubmit={onSubmit}
+            onSubmit={handleSubmit}
+
         >
             {formik => (
                 <Form className="mt-4 grid gap-4">
@@ -59,7 +67,7 @@ const DynamicFormModal: React.FC<DynamicFormProps> = (
                         <CustomButton
                             color={submitColor}
                             type={"submit"}
-                            title={"Submit"}
+                            title={titleSubmit ?? "submit"}
                         />
                     </div>
                 </Form>

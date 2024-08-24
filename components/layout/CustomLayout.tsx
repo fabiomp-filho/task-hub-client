@@ -5,7 +5,7 @@ import Footer from "@/components/footer/Footer";
 
 const CustomLayout = ({children}) => {
 
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(true);
 
     const toggleSidebar = () => {
         setIsOpen(!isOpen);
@@ -13,9 +13,9 @@ const CustomLayout = ({children}) => {
 
     return (
         <main className="flex flex-col min-h-screen bg-iceWhite">
-            <Header isOpen={isOpen} toggleSidebar={toggleSidebar}/>
-            <div className="flex flex-1 overflow-hidden mb-2 mt-2 ">
-                <Sidebar isOpen={isOpen}/>
+            <Header />
+            <div className="flex flex-1 overflow-hidden">
+                <Sidebar isOpen={isOpen} setIsOpen={toggleSidebar}/>
                 {children}
             </div>
             <Footer/>

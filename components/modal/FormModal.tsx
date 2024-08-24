@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
+import DynamicFormModal from "@/components/form/DynamicFormModal";
 
 interface ModalProps {
     isOpen: boolean;
-    onClose: () => void;
+    form: DynamicFormModal;
     title: string;
 }
 
