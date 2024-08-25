@@ -52,10 +52,8 @@ const DynamicFormModal: React.FC<DynamicFormProps> = (
         >
             {formik => (
                 <Form className="mt-4 grid gap-4">
-                    {fields.map((field, index) => (
-
-                        <RenderFields field={field} index={index} formik={formik}/>
-
+                    {fields.map((field) => (
+                        <RenderFields key={field.name} field={field} formik={formik}/>
                     ))}
                     <div className="flex justify-end mt-4 gap-4">
                         <CustomButton

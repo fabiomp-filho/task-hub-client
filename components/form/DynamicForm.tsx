@@ -46,12 +46,14 @@ const DynamicForm: React.FC<DynamicFormProps> = (
             initialValues={computedInitialValues}
             validationSchema={validationSchema}
             onSubmit={onSubmit}
+
         >
 
             {formik => (
-                <Form className="grid gap-4">
-                    {fields.map((field, index) => (
-                        <RenderFields field={field} index={index} formik={formik}/>
+                <Form className="grid gap-4" key={"form"}>
+                    {fields.map((field) => (
+
+                        <RenderFields field={field} formik={formik}/>
                     ))}
 
                     <div className="col-span-full flex justify-center mt-4">

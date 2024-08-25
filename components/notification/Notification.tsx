@@ -29,7 +29,7 @@ const CustomNotification: React.FC<NotificationProps> = ({ message, type, onClos
     }[type];
 
     return (
-        <div className={`fixed top-4 right-4 z-1000 flex items-center p-3 rounded-lg shadow-lg text-white transition-all duration-300 transform ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'} ${bgColor}`}>
+        <div className={`fixed top-4 right-4 z-50 flex items-center p-3 rounded-lg shadow-lg text-white transition-all duration-300 transform ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'} ${bgColor}`}>
             <span>{message}</span>
             <button className="ml-5" onClick={() => setVisible(false)}>
                 <FiX />

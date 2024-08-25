@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import Link from "next/link";
 import {useRouter} from "next/router";
 import {FaChevronLeft, FaChevronRight, FaPlus} from "react-icons/fa";
@@ -7,11 +7,14 @@ import {AiFillHome} from "react-icons/ai";
 import CustomButton from "@/components/buttons/CustomButton";
 import FormModal from "@/components/modal/FormModal";
 import DynamicFormModal from "@/components/form/DynamicFormModal";
-import {fields} from "@/components/board/create";
-import {validation} from "@/components/board/validation";
 import LoadingSpinner from "@/components/loading/LoadingSpinner";
 import {BoardService} from "@/services/BoardService";
 import {useNotification} from "@/components/contexts/NotificationProvider";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "@/store/store";
+import {fetchBoards} from "@/store/boardsSlice";
+import {fields} from "@/components/pages/board/create";
+import {validation} from "@/components/pages/board/validation";
 
 interface MenuItem {
     href: string;
@@ -41,23 +44,17 @@ const Sidebar = ({isOpen, setIsOpen}) => {
 
     const {addNotification} = useNotification();
     const router = useRouter();
-    const sidebarRef = useRef(null);
     const [createModal, setCreateModal] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        function handleClickOutside(event) {
-            if (sidebarRef.current && !sidebarRef.current.contains(event.target) && isOpen) {
-                setIsOpen();
-            }
-        }
+    const dispatch = useDispatch<AppDispatch>();
+    const {boards} = useSelector((state: RootState) => state.boards);
 
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, [setIsOpen]);
+    useEffect(() => {
+        dispatch(fetchBoards() as any);
+    }, [dispatch]);
 
     const createBoard = (data) => {
-
         setLoading(true);
 
         BoardService.createBoardUser(data).then((response) => {
@@ -70,25 +67,25 @@ const Sidebar = ({isOpen, setIsOpen}) => {
         })
             .finally(() => {
                 setLoading(false);
+                dispatch(fetchBoards() as any);
             })
     }
 
     return (
         <>
             <aside
-                ref={sidebarRef}
                 className={`bg-darkgreen h-full text-white text-center transition-all
-             ease-linear duration-300 fixed z-1000 ${
-                    isOpen ? 'md:w-64' : 'w-3'
+             ease-linear duration-300 fixed z-50 ${
+                    isOpen ? 'md:w-64 w-72' : 'w-2'
                 }`}
             >
                 <nav className={`flex flex-col gap-4 h-full ${isOpen ? "overflow-y-auto" : ""}`}>
-                    <div className={`flex justify-end border-mediumgreenHover `}>
+                    <div className={`flex justify-end border-mediumgreenHover items-center`}>
                         {isOpen && (
                             <button
                                 onClick={() => setIsOpen(false)}
-                                className="w-10 m-2 p-2 rounded-md hover:bg-mediumgreenHover
-                             transition-all duration-300 flex justify-center"
+                                className="w-10 m-2 p-2 rounded-md transform translate-y-2 hover:bg-mediumgreenHover
+                             transition-all duration-300 flex justify-center "
                                 title={"close sidebar"}
                             >
                                 <FaChevronLeft color={"white"} size={16}/>
@@ -97,7 +94,7 @@ const Sidebar = ({isOpen, setIsOpen}) => {
                         {!isOpen && (
                             <button
                                 onClick={() => setIsOpen(true)}
-                                className="m-2 p-2 bg-mediumgreen transform translate-x-7 rounded-3xl
+                                className="m-2 p-2 bg-mediumgreen transform translate-x-7 translate-y-2 rounded-3xl
                             hover:bg-mediumgreenHover transition-all duration-300 flex justify-center"
                                 title={"open sidebar"}
                             >
@@ -140,16 +137,15 @@ const Sidebar = ({isOpen, setIsOpen}) => {
                                 px={"3"} className={"mr-2"} hoverTitle={"Add new board"}
                                 icon={<FaPlus size={14}/>} color="darkgreen" type="button"/>
                         </div>
-                        <li className={`flex transition-all  cursor-pointer duration-300 p-2 hover:bg-mediumgreenHover ${!isOpen && "d-none"}`}>
-                            Board 1
-                        </li>
-                        <li className={`transition-all cursor-pointer duration-300 p-2 flex hover:bg-mediumgreenHover ${!isOpen && "d-none"}`}>
-                            Board 2
-                        </li>
-                        <li className={`transition-all cursor-pointer duration-300 p-2 flex hover:bg-mediumgreenHover ${!isOpen && "d-none"}`}>
-                            Board 3
-                        </li>
-
+                        {boards.map((item) => (
+                            <li key={item.name}
+                                onClick={() => {
+                                    router.push(`/board/${item.id}`)
+                                }}
+                                className={`flex transition-all  cursor-pointer duration-300 p-2 hover:bg-mediumgreenHover
+                                 ${!isOpen && "d-none"}`}
+                            >{item.name}</li>
+                        ))}
                     </ul>
                 </nav>
             </aside>
