@@ -12,8 +12,8 @@ const CustomLayout = ({children}) => {
     };
 
     return (
-        <main className="flex flex-col min-h-screen bg-iceWhite">
-            <Header />
+        <main className="flex flex-col min-h-screen bg-iceWhite min-w-screen">
+            <Header/>
             <div className="flex flex-1 overflow-hidden">
                 <Sidebar isOpen={isOpen} setIsOpen={toggleSidebar}/>
                 {children}

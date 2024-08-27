@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import DynamicForm from "@/components/form/DynamicForm";
 import * as Yup from 'yup';
 import {AuthService} from "@/services/AuthService";
@@ -7,10 +7,12 @@ import {useRouter} from "next/router";
 import {removeLogin, saveToken} from "@/utils/token";
 import Image from "next/image";
 import logo from "public/distribuidor-92.png"
+import LoadingSpinner from "@/components/loading/LoadingSpinner";
 
 export default function Login() {
     const router = useRouter();
     const {addNotification} = useNotification();
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         removeLogin();
@@ -29,6 +31,7 @@ export default function Login() {
     const onSubmit = async (values: { [key: string]: any }, {setSubmitting}: {
         setSubmitting: (isSubmitting: boolean) => void
     }) => {
+        setLoading(true)
         try {
             const response = await AuthService.login(values);
             saveToken(response.accessToken)
@@ -36,6 +39,8 @@ export default function Login() {
             router.push("/home")
         } catch (err) {
 
+        } finally {
+            setLoading(true);
         }
         setSubmitting(false);
     };
@@ -60,6 +65,7 @@ export default function Login() {
                     submitColor={"mediumgreen"}
                 />
             </div>
+            {loading && <LoadingSpinner/>}
         </main>
     );
 }
