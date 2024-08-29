@@ -3,7 +3,6 @@ import React, {useEffect, useState} from "react";
 import LoadingSpinner from "@/components/loading/LoadingSpinner";
 import {useNotification} from "@/components/contexts/NotificationProvider";
 import {BoardService} from "@/services/BoardService";
-import {CardService} from "@/services/CardService";
 import CardsContainer from "@/components/pages/board/CardsContainer";
 import CardsList from "@/components/pages/board/CardsList";
 
@@ -14,75 +13,9 @@ const Board = () => {
     const router = useRouter();
     const {id} = router.query;
     const [entity, setEntity] = useState(null);
-    const [columns, setColumns] = useState<any[]>([
-        {
-            id: 1,
-            name: "To do",
-            cards: [
-                {
-                    id: "1",
-                    name: "Card 1",
-                    description: "Card of column 1"
-                },
-                {
-                    id: "2",
-                    name: "Card 2",
-                    description: "Card of column 1"
-                },
-                {
-                    id: "3",
-                    name: "Card 3",
-                    description: "Card of column 1"
-                }
-            ]
-        },
-        {
-            id: 2,
-            name: "On going",
-            cards: [
-                {
-                    id: "1",
-                    name: "Card 1",
-                    description: "Card of column 2"
-                },
-                {
-                    id: "2",
-                    name: "Card 2",
-                    description: "Card of column 2"
-                },
-                {
-                    id: "3",
-                    name: "Card 3",
-                    description: "Card of column 2"
-                }
-            ]
-        },
-        {
-            id: 3,
-            name: "Finished",
-            cards: [
-                {
-                    id: "1",
-                    name: "Card 1",
-                    description: "Card of column 3"
-                },
-                {
-                    id: "2",
-                    name: "Card 2",
-                    description: "Card of column 3"
-                },
-                {
-                    id: "3",
-                    name: "Card 3",
-                    description: "Card of column 3"
-                }
-            ]
-        }
-    ]);
+    const [columns, setColumns] = useState<any[]>([]);
 
-    const [cards, setCards] = useState([]);
     const [loading, setLoading] = useState(false);
-
 
     useEffect(() => {
         if (id) {
@@ -95,21 +28,13 @@ const Board = () => {
         BoardService.getBoardById(id)
             .then(response => {
                 setEntity(response);
-                CardService.getCardsByBoardId(id).then((response) => {
-                    setCards(response);
-                }).catch(() => {
-                }).finally(() => {
-                    setLoading(false);
-                })
+                setColumns(response.lists)
             })
             .catch(() => {
-                setLoading(false);
-            })
 
-
-    }
-    const onSubmit = (data) => {
-
+            }).finally(() => {
+            setLoading(false);
+        })
     }
 
     return (
@@ -121,7 +46,13 @@ const Board = () => {
             </div>
             {entity &&
                 <CardsContainer
-                    body={<CardsList cardList={columns}/>}
+                    body={
+                        <CardsList
+                            fetchBoard={fetchEntity}
+                            cardList={columns}
+                            boardId={entity?.id}
+                        />
+                    }
                 />}
         </div>
     )

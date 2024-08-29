@@ -1,13 +1,14 @@
 import api from "@/services/api";
 
-export const CardService = {
+export const ListService = {
 
-    createCard: async (request) => {
+    createList: async (request) => {
         try {
-            const response = await api.post(`api/cards`, request);
+            const response = await api.post(`api/tasklists`, request);
             return response.data;
         } catch (error) {
             throw new Error(error);
         }
     },
+
 }

@@ -138,7 +138,7 @@ const Sidebar = ({isOpen, setIsOpen}) => {
                                 icon={<FaPlus size={14}/>} color="darkgreen" type="button"/>
                         </div>
                         {boards.map((item) => (
-                            <li key={item.name}
+                            <li key={item.id}
                                 onClick={() => {
                                     router.push(`/board/${item.id}`)
                                 }}
