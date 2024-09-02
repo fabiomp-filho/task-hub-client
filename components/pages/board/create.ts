@@ -6,15 +6,8 @@ export const fields = [
         placeholder: 'Enter the board title',
         label: 'Board Title',
         color: "mediumgreen",
-        labelClass: "text-black"
-    },
-    {
-        name: 'description',
-        type: 'text',
-        required: true,
-        placeholder: 'Enter the board description',
-        label: 'Description',
-        color: "mediumgreen"
+        labelClass: "text-black",
+        autoFocus: true
     },
 
 ];

@@ -7,11 +7,13 @@ import {ListService} from "@/services/ListService";
 import {CgClose} from "react-icons/cg";
 import {CardService} from "@/services/CardService";
 import useOutsideClick from "@/hooks/useOutsideClick";
+import LoadingSpinner from "@/components/loading/LoadingSpinner";
 
 const CardsList = ({cardList, fetchBoard, boardId}) => {
 
     const [showModal, setShowModal] = useState(false);
     const [card, setCard] = useState(null);
+    const [loading, setLoading] = useState(false);
     const [columnName, setColumnName] = useState("");
     const [createColumn, setCreateColumn] = useState(false);
     const [listName, setListName] = useState("");
@@ -208,10 +210,14 @@ const CardsList = ({cardList, fetchBoard, boardId}) => {
                            setShowModal(false);
                            setCard(null);
                        }}
+                       cardId={card?.id}
+                       fetchBoard={fetchBoard}
+                       setLoading={setLoading}
                        title={card?.name}
                        listTitle={columnName}
-                       children={<Card card={card}/>}
+                       children={<Card fetchBoard={fetchBoard} card={card}/>}
             />
+            {loading && <LoadingSpinner/>}
         </div>
     );
 };

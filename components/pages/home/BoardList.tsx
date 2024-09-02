@@ -9,13 +9,12 @@ const BoardList = ({boards}) => {
             {boards.map((board) => (
                 <div key={board.id}
                      onClick={() => router.push(`board/${board.id}`)}
-                     className="bg-white shadow shadow-black rounded-2xl p-2 m-1 cursor-pointer
-                  duration-300 ease-in-out hover:scale-95 hover:shadow-lg hover:bg-coolGray-300 "
+                     className="bg-white shadow shadow-black rounded-xl h-20 p-2 m-1 cursor-pointer
+                  duration-300 ease-in-out hover:bg-coolGray-100 "
                      title={board.name}>
-                    <h3 className="text-xl font-medium mb-2 border-b text-ellipsis text-zinc-800 truncate">
+                    <h3 className="text-xl font-medium ms-2 text-ellipsis text-zinc-800 truncate">
                         {board.name}
                     </h3>
-                    <p className="text-sm text-gray-600">{board.description}</p>
                 </div>
             ))}
         </div>

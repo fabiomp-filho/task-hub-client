@@ -10,5 +10,13 @@ export const ListService = {
             throw new Error(error);
         }
     },
+    getListByBoard: async (id) => {
+        try {
+            const response = await api.get(`api/tasklists/${id}`);
+            return response.data;
+        } catch (error) {
+            throw new Error(error);
+        }
+    },
 
 }

@@ -48,7 +48,7 @@ const DynamicFormModal: React.FC<DynamicFormProps> = (
             initialValues={computedInitialValues}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
-
+            enableReinitialize={true}
         >
             {formik => (
                 <Form className="mt-4 grid gap-4">

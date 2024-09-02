@@ -10,6 +10,7 @@ interface FieldProps {
     color?: string;
     options?: { value: string; label: string }[];
     required?: boolean;
+    autoFocus?: boolean;
 }
 
 interface RenderFieldsProps {
@@ -34,9 +35,11 @@ export const RenderFields: React.FC<RenderFieldsProps> = ({field, formik}) => {
                         type={field.type}
                         placeholder={field.placeholder}
                         color={field.color}
+                        autoFocus={field.autoFocus}
                         inputClass={`${formik.errors[field.name] && formik.touched[field.name] ? 'border-red-500' : ''}`}
                     />
-                    <ErrorMessage key={`error-${field.name}`} name={field.name} component="div" className="text-red-500 text-sm"/>
+                    <ErrorMessage key={`error-${field.name}`} name={field.name} component="div"
+                                  className="text-red-500 text-sm"/>
                 </div>
 
             );

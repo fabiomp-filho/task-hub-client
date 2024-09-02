@@ -10,7 +10,8 @@ const CustomInput = (
         labelClass,
         required,
         icon,
-        color = 'primary'
+        color = 'primary',
+        autoFocus
     }
 ) => {
     const baseClasses = `shadow appearance-none border rounded-lg w-full py-2 px-3 text-lightgrey leading-tight
@@ -40,6 +41,7 @@ const CustomInput = (
                 title={label}
                 placeholder={placeholder}
                 className={`${baseClasses} ${colorClasses[color]} ${inputClass}`}
+                autoFocus={true}
             />
         </div>
     )

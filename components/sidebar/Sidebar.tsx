@@ -149,18 +149,19 @@ const Sidebar = ({isOpen, setIsOpen}) => {
                     </ul>
                 </nav>
             </aside>
-            <FormModal isOpen={createModal}
-                       title={"Create board"}
-                       form={
-                           <DynamicFormModal
-                               fields={fields}
-                               validationSchema={validation}
-                               titleSubmit={"Create"}
-                               submitColor={"primary"}
-                               onClose={() => setCreateModal(false)}
-                               onSubmit={createBoard}
-                           />
-                       }
+            <FormModal
+                isOpen={createModal}
+                title={"Create board"}
+                form={
+                    <DynamicFormModal
+                        fields={fields}
+                        validationSchema={validation}
+                        titleSubmit={"Create"}
+                        submitColor={"primary"}
+                        onClose={() => setCreateModal(false)}
+                        onSubmit={createBoard}
+                    />
+                }
             />
             {loading && <LoadingSpinner/>}
         </>

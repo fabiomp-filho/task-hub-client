@@ -31,7 +31,7 @@ export default function Login() {
     const onSubmit = async (values: { [key: string]: any }, {setSubmitting}: {
         setSubmitting: (isSubmitting: boolean) => void
     }) => {
-        setLoading(true)
+        setLoading(true);
         try {
             const response = await AuthService.login(values);
             saveToken(response.accessToken)
@@ -40,7 +40,7 @@ export default function Login() {
         } catch (err) {
 
         } finally {
-            setLoading(true);
+            setLoading(false);
         }
         setSubmitting(false);
     };
